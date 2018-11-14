@@ -1,6 +1,6 @@
 ﻿using System.Web.Http;
 
-namespace rest
+namespace Mutuelle
 {
     public static class WebApiConfig
     {
