@@ -7,7 +7,7 @@ using System.Web.Helpers;
 using System.Web.Mvc;
 using System.Web.Http.Results;
 
-namespace rest.Controllers
+namespace Mutuelle.Controllers
 {
     /// <summary>
     /// Hello web API controller.

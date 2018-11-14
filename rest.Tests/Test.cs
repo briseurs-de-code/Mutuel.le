@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
 
-namespace rest.Tests
+namespace Mutuelle.Tests
 {
     [TestFixture]
     public class Test

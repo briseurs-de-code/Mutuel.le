@@ -2,7 +2,7 @@
 using System.Web.Http;
 using System;
 
-namespace rest
+namespace Mutuelle
 {
     /// <summary>
     /// Global.

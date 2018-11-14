@@ -60,7 +60,7 @@
   <ItemGroup>
     <ProjectReference Include="..\rest\rest.csproj">
       <Project>{C6B334AC-AC00-4021-978A-036383C7E19B}</Project>
-      <Name>rest</Name>
+      <Name>Mutuelle</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
