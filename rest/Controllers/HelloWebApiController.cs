@@ -1,5 +1,12 @@
 ﻿using System;
 using System.Web.Http;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Web.Helpers;
+using System.Web.Mvc;
+using System.Web.Http.Results;
+
 namespace rest.Controllers
 {
     /// <summary>
@@ -19,9 +26,13 @@ namespace rest.Controllers
         /// Get this instance.
         /// </summary>
         /// <returns>The get.</returns>
-        public string Get()
+        public JsonResult<List<string>> Get()
         {
-            return "hello, world";
+            List<String> collection = new List<String>();
+
+            collection.Add("abc");
+
+            return Json(collection);
         }
     }
 }
