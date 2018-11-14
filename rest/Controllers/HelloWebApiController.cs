@@ -28,9 +28,10 @@ namespace Mutuelle.Controllers
         /// <returns>The get.</returns>
         public JsonResult<List<string>> Get()
         {
-            List<String> collection = new List<String>();
-
-            collection.Add("abc");
+            List<String> collection = new List<String>
+            {
+                "abc"
+            };
 
             return Json(collection);
         }

@@ -1,1 +1,1 @@
-﻿<%@ Application Inherits="rest.Global" %>
+﻿<%@ Application Inherits="Mutuelle.Global" %>
