@@ -10,6 +10,10 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using System.IO;
 using System.Web.Hosting;
+using Emgu.CV.Features2D;
+using Emgu.CV.Util;
+using System.Drawing;
+using Emgu.CV.UI;
 
 namespace Mutuelle.Controllers
 {
@@ -32,23 +36,36 @@ namespace Mutuelle.Controllers
         /// <returns>The get.</returns>
         public JsonResult<List<string>> Get()
         {
-            //var filename = @"C:\Users\svent\Documents\DotNet\Mutuel.le\Mutuelle\Assets\harmonie.png";
             var carteFilename = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "Assets", "carte_test.png");
             var patternFilename = Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "Assets", "harmonie.png");
 
-            //if (!File.Exists(filename)) return null;
-            //if (!File.Exists(carteFilename)) return null;
+            Image<Bgr, byte> source = new Image<Bgr, byte>(carteFilename); // Image B
+            Image<Bgr, byte> template = new Image<Bgr, byte>(patternFilename); // Image A
+            Image<Bgr, byte> imageToShow = source.Copy();
+            
+            using (Image<Gray, float> result = source.MatchTemplate(template, Emgu.CV.CvEnum.TemplateMatchingType.CcoeffNormed))
+            {
+                double[] minValues, maxValues;
+                Point[] minLocations, maxLocations;
+                result.MinMax(out minValues, out maxValues, out minLocations, out maxLocations);
 
-            Mat pattern = new Mat(patternFilename);
-            Mat carteTest = new Mat(carteFilename);
-            Mat result = new Mat();
+                // You can try different values of the threshold. I guess somewhere between 0.75 and 0.95 would be good.
+                if (maxValues[0] > 0.3)
+                {
+                    // This is a match. Do something with it, for example draw a rectangle around it.
+                    Rectangle match = new Rectangle(maxLocations[0], template.Size);
+                    imageToShow.Draw(match, new Bgr(Color.Red), 3);
+                }
+            }
 
-            Emgu.CV.CvInvoke.MatchTemplate(carteTest, pattern, result, Emgu.CV.CvEnum.TemplateMatchingType.Ccoeff);
-
+            imageToShow.ToBitmap().Save(Path.Combine(HostingEnvironment.ApplicationPhysicalPath, "Assets", "resultat.png"));
+            
             List<String> collection = new List<String>
             {
-               "test"
-            };
+               //result.Cols.ToString(),
+               //result.Rows.ToString(),
+               //resultat.Size.ToString(),
+            };    
 
             return Json(collection);
         }
