@@ -127,7 +127,11 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Compile Include="Controllers\DefaultController.cs" />
+=======
+    <Compile Include="Controllers\TestController.cs" />
+>>>>>>> 33a780b67a4b001cb5d3a5095986a1a9756939e5
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
