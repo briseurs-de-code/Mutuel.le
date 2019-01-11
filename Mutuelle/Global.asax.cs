@@ -1,6 +1,9 @@
 ﻿using System.Web;
 using System.Web.Http;
 using System;
+using System.Linq;
+using System.Web.Routing;
+using System.Web.Mvc;
 
 namespace Mutuelle
 {
@@ -15,6 +18,33 @@ namespace Mutuelle
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            RegisterRoutes(RouteTable.Routes);
+
+            ViewEngines.Engines.Clear();
+
+            ViewEngines.Engines.Add(new RazorViewEngine());
+
+            var razorEngine = ViewEngines.Engines.OfType<RazorViewEngine>().First();
+            razorEngine.ViewLocationFormats = new String[]
+            {
+                "~/Views/Default/{0}.cshtml"
+            };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="routes"></param>
+        public static void RegisterRoutes(RouteCollection routes)
+        {
+            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.MapRoute(
+                "Default",
+                "{controller}/{action}/{id}",
+                new { controller = "Default", action = "Index", id = "" }
+            );
         }
 
         /// <summary>
