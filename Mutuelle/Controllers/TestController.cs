@@ -80,7 +80,7 @@ namespace rest.Controllers
         /// Get this instance.
         /// </summary>
         /// <returns>The get.</returns>
-        public JsonResult<string> Post([FromBody] dynamic value)
+        public JsonResult<ResultatDTO> Post([FromBody] dynamic value)
         {
             List<String> resultat = new List<String>();
 
@@ -116,11 +116,14 @@ namespace rest.Controllers
             }
 
             ResultatDTO resultatDTO = new ResultatDTO();
-            resultatDTO.imageResultat = EmguImageToBase64(imageResultat);
+            //resultatDTO.imageResultat = EmguImageToBase64(imageResultat);
+            resultatDTO.imageResultat = "gros depp";
             resultatDTO.mutuelles = resultat;
 
-            string json = new JavaScriptSerializer().Serialize(resultatDTO);
-            return Json(json);
+            //JavaScriptSerializer serializer = new JavaScriptSerializer();
+            //serializer.MaxJsonLength = 10000000;
+            //string json = serializer.Serialize(resultatDTO);
+            return Json(resultatDTO);
            // return Json(resultatDTO);
         }
     }
