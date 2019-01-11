@@ -1,0 +1,103 @@
+﻿@inherits System.Web.Mvc.WebViewPage
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <title>Mutuel.le</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <v-app>
+
+            <template>
+                <v-toolbar dark :color="app.color.primary">
+                    <v-toolbar-title class="white--text">{{ app.title }}</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                    <v-btn icon>
+                        <v-icon>apps</v-icon>
+                    </v-btn>
+                </v-toolbar>
+            </template>
+
+            <v-content>
+                <v-container filled>
+                    <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                        <v-img v-if="models.scan" :src="models.scan">
+                    </v-flex>
+                    <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
+                        <v-btn v-if="!models.scan" v-on:click="pickScan()" color="success">Scanner</v-btn>
+                        <v-btn v-if="models.scan" v-on:click="analyser()" color="success">Analyser</v-btn>
+                        <v-btn v-if="models.scan" v-on:click="models.scan = ''" color="info">Retour</v-btn>
+                        <input type="file"
+                               style="display: none"
+                               ref="image"
+                               accept="image/png"
+                               v-on:change="onScanPick">
+                    </v-flex>
+                </v-container>
+            </v-content>
+        </v-app>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    app: {
+                        title: "Mutuel.le",
+                        color: {
+                            primary: "#741b47"
+                        }
+                    },
+                    models: {
+                        scan: ''
+                    }
+                }
+            },
+            methods: {
+                analyser() {
+                    var image = this.models.scan.split(',')[1];
+
+                    axios.post("/api/test", { image })
+                        .then((response) => {
+
+                            console.log(response);
+                        });
+                },
+                pickScan() {
+                    this.$refs.image.click();
+                },
+                onScanPick(e) {
+                    var files = e.target.files;
+
+                    if (files[0] !== undefined) {
+
+                        this.imageName = files[0].name;
+
+                        if (this.imageName.lastIndexOf('.') <= 0) {
+                            return
+                        }
+
+                        var fileReader = new FileReader();
+
+                        fileReader.readAsDataURL(files[0]);
+
+                        fileReader.addEventListener('load', () => {
+
+                            this.models.scan = fileReader.result;
+                            //console.log(fileReader.result.split(',')[1]);
+                            //console.log(files[0]);
+                        });
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
