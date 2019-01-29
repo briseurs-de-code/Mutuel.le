@@ -54,3 +54,4 @@ C:\Users\visualstudio\Desktop\Mutuel.le\Mutuelle\bin\zh-tw\ZedGraph.resources.dl
 C:\Users\visualstudio\Desktop\Mutuel.le\Mutuelle\obj\Debug\Mutuelle.csprojResolveAssemblyReference.cache
 C:\Users\visualstudio\Desktop\Mutuel.le\Mutuelle\obj\Debug\rest.dll
 C:\Users\visualstudio\Desktop\Mutuel.le\Mutuelle\obj\Debug\rest.pdb
+C:\Users\visualstudio\Desktop\Mutuel.le\Mutuelle\bin\Newtonsoft.Json.pdb
