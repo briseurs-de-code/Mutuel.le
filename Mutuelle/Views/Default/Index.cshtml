@@ -29,7 +29,13 @@
                     </v-flex>
                     <v-flex xs12 class="text-xs-center text-sm-center text-md-center text-lg-center">
                         <v-btn v-if="!models.scan" v-on:click="pickScan()" color="success">Scanner</v-btn>
-                        <v-btn v-if="models.scan" v-on:click="analyser()" color="success">Analyser</v-btn>
+                        <v-btn 
+                            v-if="models.scan" 
+                            v-on:click="analyser()" 
+                            :color="loading ? '#909090' : 'success'"
+                            :disabled="loading"
+                        >Analyser&nbsp;<v-progress-circular v-show="loading" indeterminate :size="24" color="#fffff"></v-progress-circular>
+                        </v-btn>
                         <v-btn v-if="models.scan" v-on:click="models.scan = ''" color="info">Retour</v-btn>
                         <input type="file"
                                style="display: none"
@@ -49,6 +55,7 @@
             el: '#app',
             data() {
                 return {
+                    loading: false,
                     app: {
                         title: "Mutuel.le",
                         color: {
@@ -70,14 +77,17 @@
 
                     //const dt = JSON.stringify({image:image});
                     
+                    this.loading = true;
+
                     axios({
                         method: 'post',
-                        url: '/api/test',
+                        url: '/api/testa',
                         headers: {
                             'Content-type': 'application/json'
                         },
                         data: { 'image': image }
                     }).then((response) => {
+                        this.loading = false;
 
                         console.log(response);
                     });
